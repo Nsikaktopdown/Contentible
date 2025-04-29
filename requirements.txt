@@ -1,0 +1,4 @@
+google-genai==1.12.1
+ipython==9.2.0
+Flask==3.1.0
+Flask-Cors==5.0.0
