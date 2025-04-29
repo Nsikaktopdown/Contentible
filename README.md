@@ -21,7 +21,55 @@ A powerful AI-driven assistant that helps marketers generate **content marketing
 |------------|-------------------------|
 | Backend    | Python, Vertex AI SDK, Gemini 2.0 Flash |
 | Frontend   | Next.js (React + Tailwind) |
-| Hosting    | Google Cloud (Vertex AI + GCP Storage) |
-| Auth (opt) | Google Identity / Firebase (if used) |
+| AI + Hosting    | Google Cloud (Vertex AI + GCP Storage) |
+
 
 ---
+
+## How to run
+
+### Backend
+1. setup vritual environment for the python application
+
+```python
+
+    pip install virtualenv
+    virtualenv my_env # create a virtual environment named my_env
+    source my_env/bin/activate # activate my_env
+
+```
+2. Set the following environment variables
+```python
+
+    os.environ["GOOGLE_CLOUD_PROJECT"] = "YOUR_GCP_PROJECT_ID"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "YOUR_CREDENTIAL.json"
+
+```
+
+3. Install all dependencies
+
+```python
+
+    pip install -r requirements.txt
+
+```
+
+
+## Frontend
+1. Install NPM packages
+
+```javascript
+
+    npm install
+
+```    
+
+2. Run the application
+
+```javascript
+
+    npm run dev
+
+``` 
+
+___
