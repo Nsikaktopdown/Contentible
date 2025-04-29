@@ -2,7 +2,12 @@ import json
 import os
 
 from google import genai
+from env import set_envs
 
+set_envs()
+
+print(os.environ.get("GOOGLE_CLOUD_PROJECT"))
+print(os.environ.get("GOOGLE_APPLICATION_CREDENTIALS"))
 
 def get_gen_ai_client():
     PROJECT_ID = str(os.environ.get("GOOGLE_CLOUD_PROJECT"))
