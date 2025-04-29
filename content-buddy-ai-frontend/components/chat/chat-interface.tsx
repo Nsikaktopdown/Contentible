@@ -416,7 +416,7 @@ export function ChatInterface() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://127.0.0.1:8100/generate', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/generate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
