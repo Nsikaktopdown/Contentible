@@ -4,6 +4,13 @@ A powerful AI-driven assistant that helps marketers generate **content marketing
 
 ---
 
+## Demo
+<img width="1920" alt="Screenshot 2025-04-30 at 12 40 43 AM" src="https://github.com/user-attachments/assets/4853153f-69fe-4d69-a922-ef4c0913d20b" />
+
+
+
+---
+
 ## 🚀 Features
 
 - ✨ Generate content assets from campaign briefs or product descriptions
