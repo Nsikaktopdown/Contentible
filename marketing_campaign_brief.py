@@ -224,6 +224,9 @@ def detect_ai_action(prompt):
         - "how are you" → action: "pleasanties"
         - "What is your name" → action: "pleasanties"
         - "social media channel" → action: "find_social_channels"
+        - "trends" → action: "generate_trends",
+        - "ideas" → action: "general"
+        - "just any kind of message" → action: "general"
 
         Instructions:
             - Read the input text carefully.
@@ -253,11 +256,15 @@ def detect_ai_action(prompt):
 class AiResponse(BaseModel):
     response: str
 
-def generat_general_prompt(prompt):
+def generate_general_prompt(prompt):
     global client 
 
     detect_ai_action_prompt = f"""
         You are an assistant designed to help content marketers generate marketing ideas.
+
+         campaign creative brief:
+        {creative_brief}
+        
         Input Text:
         {prompt}    
             
@@ -274,6 +281,39 @@ def generat_general_prompt(prompt):
     
     return response.text
 
+class AiTrendResponse(BaseModel):
+    response: list[str]
+
+def generate_trends(prompt):
+    global client 
+    global creative_brief
+
+    detect_ai_action_prompt = f"""
+       You are an AI assistant specialized in helping content marketers search and extract relevant links from the internet based on a provided marketing campaign creative. Your goal is to find websites, articles, resources, and references that align closely with the campaign’s theme, audience, and objectives. Return a curated list of high-quality links that marketers can use for inspiration, partnerships, or promotional activities.
+
+        instructions:
+            - It should scrap the web for links to relation post, articles  website like, e.g. www.techcrunch.com, https://techcabal.com, https://www.theverge.com/tech
+            - Return a list of actions in JSON format, e.g. ["https://www.byteplus.com/en/topic/407051", "https://everphone.com/en/blog/generative-ki-smartphones-2025/"]
+
+        campaign creative brief:
+        {creative_brief}
+
+        Input Text:
+        {prompt}    
+            
+        """
+    response = client.models.generate_content(
+        model=MODEL_ID,
+        contents=detect_ai_action_prompt,
+        config=GenerateContentConfig(
+        response_mime_type="application/json",
+        response_schema=AiTrendResponse,),)
+    
+    action_json = json.loads(response.text)
+    print(action_json)
+    
+    return response.text
+
 def handle_prompt(action, prompt):
     match action:
         case "product_launch":
@@ -281,9 +321,11 @@ def handle_prompt(action, prompt):
         case "generate_ad_copy":
             return {"action": action, "response": json.loads(generate_ad_copy())}
         case "pleasanties":
-            return {"action": "general", "response": json.loads(generat_general_prompt(prompt=prompt))["response"] }
+            return {"action": "general", "response": json.loads(generate_general_prompt(prompt=prompt))["response"] }
+        case "generate_trends":
+            return {"action": "generate_trends", "response": json.loads(generate_trends(prompt=prompt))["response"] }
         case _:
-            return {"action": "general", "response": json.loads(generat_general_prompt(prompt=prompt))["response"] }
+            return {"action": "general", "response": json.loads(generate_general_prompt(prompt=prompt))["response"] }
      
 
 
